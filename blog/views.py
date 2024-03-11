@@ -11,7 +11,7 @@ class PostList(generic.ListView):
     paginate_by = 6
 
 
-def post_detail(request, slug):
+def post_detail(request, slug): 
     """
     Display an individual :model:`blog.Post`.
 
@@ -28,8 +28,10 @@ def post_detail(request, slug):
     queryset = Post.objects.filter(status=1)
     post = get_object_or_404(queryset, slug=slug)
 
+    context = {"post": post}
+
     return render(
         request,
         "blog/post_detail.html",
-        {"post": post},
+        context,
     )
