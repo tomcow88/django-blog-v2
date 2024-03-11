@@ -1,7 +1,8 @@
 from django.shortcuts import render
+from django.contrib import messages
 from .models import About
 from .forms import CollaborateForm
-from django.contrib import messages
+# Create your views here.
 
 
 def about_me(request):
@@ -16,7 +17,7 @@ def about_me(request):
         The most recent instance of :model:`about.About`.
         ``collaborate_form``
             An instance of :form:`about.CollaborateForm`.
-    
+
     **Template**
     :template:`about/about.html`
     """
@@ -27,17 +28,14 @@ def about_me(request):
             collaborate_form.save()
             messages.add_message(
                 request, messages.SUCCESS,
-                "Collaboration request received! I endeavor to respond within 2 working days."
+                'Collaboration request received! I endeavour to respond within 2 working days.'
             )
-
     about = About.objects.all().order_by('-updated_on').first()
     collaborate_form = CollaborateForm()
 
     return render(
         request,
         "about/about.html",
-        {
-            "about": about,
-            "collaborate_form": collaborate_form
-        },
+        {"about": about,
+         "collaborate_form": collaborate_form},
     )
